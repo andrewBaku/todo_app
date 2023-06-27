@@ -9,9 +9,14 @@ class Todo(models.Model):
     text = models.TextField()
     created_date = models.DateTimeField(default=timezone.now)
     is_done = models.BooleanField(default=False)
+    is_canceled = models.BooleanField(default=False)
 
-    def done_problem(self):
+    def done_task(self):
         self.is_done = True
+        self.save()
+
+    def cancel_task(self):
+        self.is_canceled = True
         self.save()
 
     def __str__(self):
