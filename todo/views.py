@@ -2,6 +2,7 @@ from django.shortcuts import render, redirect
 from django.contrib import messages
 from django.contrib.auth import login, authenticate, logout
 from django.contrib.auth.forms import UserCreationForm, AuthenticationForm
+from django.shortcuts import get_object_or_404
 
 
 from .models import Todo
@@ -25,6 +26,22 @@ def homepage(request):
     else:
         form = TodoEnterForm()
     return render(request, 'todo/homepage.html', {'form': form, 'todo_tasks': todo_tasks})
+
+def task_detail(request, pk):
+    task = get_object_or_404(Todo, pk=pk)
+    return render(request, 'todo/task_detail.html', {'task': task})
+
+def done_task(request, pk):
+    task = get_object_or_404(Todo, pk=pk)
+    task.done_task()
+    task.save()
+    return redirect('homepage')
+
+def cancel_task(request, pk):
+    task = get_object_or_404(Todo, pk=pk)
+    task.cancel_task()
+    task.save()
+    return redirect('homepage')
 
 def sign_up(request):
     if request.method == "POST":

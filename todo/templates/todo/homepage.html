@@ -29,17 +29,24 @@
     </div>
 
     <h2 class="my-4 m-3">My tasks</h2>
-    <div class="row m-3">
+    <div class="row m-3 ">
     {% for t in todo_tasks %}
 
-        <div class="card m-2">
+        <div class="card m-2 {% if t.is_done %} bg-success text-white {% endif %}{% if t.is_canceled %} bg-danger text-white {% endif %}">
   <div class="card-header">
     Created by: {{ t.created_date }}
   </div>
   <div class="card-body">
     <h5 class="card-title">{{ t.title }}</h5>
     <p class="card-text">{{ t.text }}</p>
-    <a href="#" class="btn btn-primary">Go somewhere</a>
+
+      <div class="d-flex mb-3">
+          <div class="me-auto p-2"><a href="{% url 'task_detail' pk=t.pk %}" class="btn btn-primary">Task detail</a></div>
+          {% if t.is_done == False and t.is_canceled == False %}
+          <div class="p-2"><a href="{% url 'done_task' pk=t.pk %}" class="btn btn-primary">Done Task</a></div>
+          <div class="p-2"><a href="{% url 'cancel_task' pk=t.pk %}" class="btn btn-primary">Cancel Task</a>
+              {% endif %}
+        </div>
   </div>
 </div>
 

@@ -1,0 +1,21 @@
+{% extends 'todo/base.html' %}
+
+{% block content %}
+
+    <div class="card text-center">
+  <div class="card-header">
+    Task №{{ task.pk }}
+  </div>
+        <div class="card-header">
+    Author {{ task.author }}
+  </div>
+  <div class="card-body">
+    <h5 class="card-title">{{ task.title}}</h5>
+    <p class="card-text">{{ task.text }}</p>
+  </div>
+  <div class="card-footer text-body-secondary">
+    Created {{ task.created_date }}
+  </div>
+</div>
+
+{% endblock %}
