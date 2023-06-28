@@ -1,0 +1,44 @@
+{% extends 'todo/base.html' %}
+
+{% block content %}
+
+    {% load crispy_forms_tags %}
+
+    <h1>Main Page</h1>
+
+    <div class="m-5">
+
+
+    <form method="POST">
+    {% csrf_token %}
+
+    {{ form|crispy }}
+
+    <button type="submit" class="btn btn-primary m-3">Submit</button>
+
+    </form>
+
+    </div>
+
+    <h2 class="my-4 m-3">My tasks</h2>
+    <div class="row m-3">
+    {% for t in todo_tasks %}
+
+        <div class="card">
+  <div class="card-header">
+    Created by: {{ t.created_date }}
+  </div>
+  <div class="card-body">
+    <h5 class="card-title">{{ t.title }}</h5>
+    <p class="card-text">{{ t.text }}</p>
+    <a href="#" class="btn btn-primary">Go somewhere</a>
+  </div>
+</div>
+
+    {% empty %}
+<p>No tasks added.</p>
+    {% endfor %}
+    </div>
+
+
+{% endblock %}
