@@ -18,7 +18,7 @@
   <!-- Container wrapper -->
   <div class="container">
     <!-- Navbar brand -->
-    <a class="navbar-brand me-2" href="#">
+    <a class="navbar-brand me-2" href="{% url 'homepage' %}">
       <img
         src="{% static 'todo/images/todo_icon.png' %}"
         height="16"
@@ -53,10 +53,13 @@
 
       <div class="d-flex align-items-center">
         <button type="button" class="btn btn-link px-3 me-2">
-          Login
+          <a class='link-body-emphasis link-offset-2 link-underline-opacity-25 link-underline-opacity-75-hover' href="{% url 'log_in' %}">Login</a>
         </button>
         <button type="button" class="btn btn-primary me-3">
-          Sign up
+            <a class='link-body-emphasis link-offset-2 link-underline-opacity-25 link-underline-opacity-75-hover' href="{% url 'sign_up' %}">Sign up</a>
+        </button>
+      <button type="button" class="btn btn-link px-3 me-2">
+          <a class='link-body-emphasis link-offset-2 link-underline-opacity-25 link-underline-opacity-75-hover' href="{% url 'logout' %}">Logout</a>
         </button>
           {% if user.is_authenticated %}
           <button type="button" class="btn btn-link px-3 me-2">

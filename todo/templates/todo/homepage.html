@@ -4,18 +4,26 @@
 
     {% load crispy_forms_tags %}
 
-    <h1>Main Page</h1>
+    <div class="m-3">
 
-    <div class="m-5">
-
+    {% if user.is_authenticated == False %}
+    <h2 class="mb-3">To create your tasks,
+        please <a class='link-body-emphasis link-offset-2 link-underline-opacity-25 link-underline-opacity-75-hover' href="{% url 'sign_up' %}">register</a>
+        or
+        <a class='link-body-emphasis link-offset-2 link-underline-opacity-25 link-underline-opacity-75-hover' href="{% url 'log_in' %}">log in</a>
+        .</h2>
+        {% endif %}
 
     <form method="POST">
     {% csrf_token %}
 
     {{ form|crispy }}
 
-    <button type="submit" class="btn btn-primary m-3">Submit</button>
-
+        {% if user.is_authenticated == False %}
+    <button type="submit" class="btn btn-primary m-3" disabled>Submit</button>
+        {% else %}
+        <button type="submit" class="btn btn-primary m-3">Submit</button>
+        {% endif %}
     </form>
 
     </div>
@@ -24,7 +32,7 @@
     <div class="row m-3">
     {% for t in todo_tasks %}
 
-        <div class="card">
+        <div class="card m-2">
   <div class="card-header">
     Created by: {{ t.created_date }}
   </div>
