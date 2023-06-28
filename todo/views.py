@@ -5,17 +5,15 @@ from django.contrib.auth.forms import UserCreationForm, AuthenticationForm
 from django.shortcuts import get_object_or_404
 
 
-from .models import Todo
+from .models import Task
 from .forms import TodoEnterForm
 
 # Create your views here.
 def homepage(request):
-    todo_tasks = Todo.objects.all()
-    print(request.user.is_authenticated)
+    todo_tasks = Task.objects.all()
     if request.method == "POST":
         form = TodoEnterForm(request.POST)
         if form.is_valid():
-            print(request)
             task = form.save(commit=False)
             task.author = request.user
             task.save()
@@ -28,17 +26,17 @@ def homepage(request):
     return render(request, 'todo/homepage.html', {'form': form, 'todo_tasks': todo_tasks})
 
 def task_detail(request, pk):
-    task = get_object_or_404(Todo, pk=pk)
+    task = get_object_or_404(Task, pk=pk)
     return render(request, 'todo/task_detail.html', {'task': task})
 
 def done_task(request, pk):
-    task = get_object_or_404(Todo, pk=pk)
+    task = get_object_or_404(Task, pk=pk)
     task.done_task()
     task.save()
     return redirect('homepage')
 
 def cancel_task(request, pk):
-    task = get_object_or_404(Todo, pk=pk)
+    task = get_object_or_404(Task, pk=pk)
     task.cancel_task()
     task.save()
     return redirect('homepage')

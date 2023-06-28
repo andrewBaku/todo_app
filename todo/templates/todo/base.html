@@ -52,16 +52,19 @@
       <!-- Left links -->
 
       <div class="d-flex align-items-center">
+      {% if user.is_authenticated == False %}
         <button type="button" class="btn btn-link px-3 me-2">
           <a class='link-body-emphasis link-offset-2 link-underline-opacity-25 link-underline-opacity-75-hover' href="{% url 'log_in' %}">Login</a>
         </button>
         <button type="button" class="btn btn-primary me-3">
             <a class='link-body-emphasis link-offset-2 link-underline-opacity-25 link-underline-opacity-75-hover' href="{% url 'sign_up' %}">Sign up</a>
         </button>
+      {% endif %}
+      {% if user.is_authenticated %}
       <button type="button" class="btn btn-link px-3 me-2">
           <a class='link-body-emphasis link-offset-2 link-underline-opacity-25 link-underline-opacity-75-hover' href="{% url 'logout' %}">Logout</a>
         </button>
-          {% if user.is_authenticated %}
+
           <button type="button" class="btn btn-link px-3 me-2">
           Hello, {{ user.get_username }}
         </button>

@@ -3,7 +3,7 @@ from django.conf import settings
 from django.utils import timezone
 
 # Create your models here.
-class Todo(models.Model):
+class Task(models.Model):
     author = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
     title = models.CharField(max_length=200)
     text = models.TextField()
@@ -18,6 +18,14 @@ class Todo(models.Model):
     def cancel_task(self):
         self.is_canceled = True
         self.save()
+
+    def __str__(self):
+        return self.title
+
+class Subtask(models.Model):
+    task = models.ForeignKey('Task', on_delete=models.CASCADE, null=True)
+    title = models.CharField(max_length=200, null=True)
+    created_date = models.DateTimeField(default=timezone.now)
 
     def __str__(self):
         return self.title
