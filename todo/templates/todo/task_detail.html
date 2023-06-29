@@ -2,6 +2,8 @@
 
 {% block content %}
 
+    {% load crispy_forms_tags %}
+
     <div class="card text-center">
   <div class="card-header">
     Task №{{ task.pk }}
@@ -12,10 +14,31 @@
   <div class="card-body">
     <h5 class="card-title">{{ task.title}}</h5>
     <p class="card-text">{{ task.text }}</p>
+
+      {% if subtask_list|length > 0 %}
+      <p class="card-text">Subtasks:</p>
+        <ul class="list-group list-group-flush">
+
+        {% for s in subtask_list %}
+        <li class="list-group-item">{{ s.title }}</li>
+        {% endfor %}
+
+        </ul>
+          {% else %}
+          <p class="card-text">No subtasks added.</p>
+      {% endif %}
   </div>
   <div class="card-footer text-body-secondary">
-    Created {{ task.created_date }}
+    <p class="card-text">Created {{ task.created_date }}</p>
   </div>
+    <div class="card-footer text-body-secondary mt-3">
+        <h5 class="card-title">Add Subtask</h5>
+        <form method="POST" class="m-1">
+    {% csrf_token %}
+            {{ form|crispy }}
+                <button type="submit" class="btn btn-primary m-2">Add</button>
+        </form>
+    </div>
 </div>
 
 {% endblock %}

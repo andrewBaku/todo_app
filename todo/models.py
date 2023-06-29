@@ -10,6 +10,7 @@ class Task(models.Model):
     created_date = models.DateTimeField(default=timezone.now)
     is_done = models.BooleanField(default=False)
     is_canceled = models.BooleanField(default=False)
+    categ = models.ForeignKey('Category', on_delete=models.CASCADE, null=True)
 
     def done_task(self):
         self.is_done = True
@@ -26,6 +27,23 @@ class Subtask(models.Model):
     task = models.ForeignKey('Task', on_delete=models.CASCADE, null=True)
     title = models.CharField(max_length=200, null=True)
     created_date = models.DateTimeField(default=timezone.now)
+    is_done = models.BooleanField(default=False)
+    is_canceled = models.BooleanField(default=False)
+
+    def done_subtask(self):
+        self.is_done = True
+        return self
+
+    def cancel_subtask(self):
+        self.is_canceled = True
+        return self
 
     def __str__(self):
         return self.title
+
+class Category(models.Model):
+    name = models.CharField(max_length=100)
+    created_date = models.DateTimeField(default=timezone.now)
+
+    def __str__(self):
+        return self.name

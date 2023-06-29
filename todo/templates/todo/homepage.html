@@ -40,6 +40,7 @@
     <h5 class="card-title">{{ t.title }}</h5>
     <p class="card-text">{{ t.text }}</p>
 
+
       <div class="d-flex mb-3">
           <div class="me-auto p-2"><a href="{% url 'task_detail' pk=t.pk %}" class="btn btn-primary">Task detail</a></div>
           {% if t.is_done == False and t.is_canceled == False %}
