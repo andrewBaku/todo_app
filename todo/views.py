@@ -26,6 +26,20 @@ def homepage(request):
         form = TodoEnterForm()
     return render(request, 'todo/homepage.html', {'form': form, 'todo_tasks': todo_tasks, 'subtasks': subtasks})
 
+def create_task(request):
+    if request.method == 'POST':
+        form = TodoEnterForm(request.POST)
+        if form.is_valid():
+            task = form.save(commit=False)
+            task.author = request.user
+            task.save()
+            messages.success(request, 'Your Task successfully added!')
+            return redirect('homepage')
+        else:
+            messages.error(request, 'Error saving form')
+    else:
+        form = TodoEnterForm()
+    return render(request, 'todo/add_task.html', {'form': form})
 
 def task_detail(request, pk):
     task = get_object_or_404(Task, pk=pk)

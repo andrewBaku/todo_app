@@ -2,8 +2,10 @@
 
 {% block content %}
 
+    {% load todo_tags %}
     {% load crispy_forms_tags %}
 
+    <!--
     <div class="m-3">
 
     {% if user.is_authenticated == False %}
@@ -27,8 +29,9 @@
     </form>
 
     </div>
+    -->
 
-    <h2 class="my-4 m-3">My tasks</h2>
+    <h2 class="my-2 m-3">My tasks</h2>
     <div class="row m-3 ">
     {% for t in todo_tasks %}
 
@@ -40,6 +43,16 @@
     <h5 class="card-title">{{ t.title }}</h5>
     <p class="card-text">{{ t.text }}</p>
 
+    {%  if subtasks|get_item:t.pk|length > 0 %}
+
+          <ol class="list-group list-group-numbered mb-3">
+            {% for s in subtasks|get_item:t.pk %}
+                <li class="list-group-item {% if t.is_done %} bg-success text-white {% endif %}{% if t.is_canceled %} bg-danger text-white {% endif %}">{{ s.title }}</li>
+            {% endfor %}
+        </ol>
+
+
+    {% endif %}
 
       <div class="d-flex mb-3">
           <div class="me-auto p-2"><a href="{% url 'task_detail' pk=t.pk %}" class="btn btn-primary">Task detail</a></div>

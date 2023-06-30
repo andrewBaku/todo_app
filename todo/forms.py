@@ -8,7 +8,7 @@ class TodoEnterForm(forms.ModelForm):
     #todo_desc = forms.CharField(max_length=1000, help_text='Enter an extended description of your task.')
     class Meta:
         model = Task
-        fields = ('title', 'text')
+        fields = ('title', 'text', 'categ')
         widgets = {
             'text': Textarea(attrs={'cols': 20, 'rows': 5}),
         }
